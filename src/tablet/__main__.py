@@ -10,6 +10,7 @@ from tablet import version
 from pathlib import Path
 
 _logpath = Path("tablet.log")
+app_name = "Tablet"
 
 def get_logger():
     """Initiate the logger"""
@@ -28,6 +29,8 @@ def parse(cl_input):
     parser = argparse.ArgumentParser(description='Tabletx 2D draw interface to Cairo')
     parser.add_argument('-COLORS', '--colors', action='store_true',
                         help='Show the list of background color names')
+    parser.add_argument('-T', '--test', action='store_true',
+                        help='Run some test features')
     parser.add_argument('-D', '--debug', action='store_true',
                         help='Debug mode'),
     parser.add_argument('-V', '--version', action='store_true',
@@ -38,7 +41,7 @@ def parse(cl_input):
 def main():
     # Start logging
     logger = get_logger()
-    logger.info(f'Tablet version: {version}')
+    logger.info(f'{app_name} version: {version}')
     logger.info('-----------------\n')
 
     # Parse the command line args
@@ -46,13 +49,15 @@ def main():
 
     if args.version:
         # Just print the version and quit
-        print(f'Scrall parser version: {version}')
+        print(f'{app_name} version: {version}')
         sys.exit(0)
+
+    if args.test:
+        from tablet.styledb import StyleDB
+        StyleDB.load_config_files()
 
     if args.colors:
         # Just print the database colors and quit
-        # Config(rebuild_db=args.rebuild)  # Do any configuration tasks necessary before starting up the app
-        # already_configured = True  # Don't run it again
         from tablet.styledb import StyleDB
         StyleDB.report_colors()
 
