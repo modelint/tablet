@@ -6,10 +6,11 @@ import logging
 import logging.config
 import sys
 import argparse
-from tablet import version
+from tabletlib import version
 from pathlib import Path
+import make_a_tablet
 
-_logpath = Path("tablet.log")
+_logpath = Path("tabletlib.log")
 app_name = "Tablet"
 
 def get_logger():
@@ -53,13 +54,16 @@ def main():
         sys.exit(0)
 
     if args.test:
-        from tablet.styledb import StyleDB
+        from tabletlib.styledb import StyleDB
         StyleDB.load_config_files()
 
     if args.colors:
         # Just print the database colors and quit
-        from tablet.styledb import StyleDB
+        from tabletlib.styledb import StyleDB
         StyleDB.report_colors()
+
+    t = make_a_tablet.tabloid_size_tablet()
+    pass
 
     logger.info("No problemo")  # We didn't die on an exception
     print("\nNo problemo")

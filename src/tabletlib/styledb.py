@@ -5,7 +5,7 @@ import logging
 from pathlib import Path
 import yaml
 from collections import namedtuple
-from tablet.exceptions import BadConfigData
+from tabletlib.exceptions import BadConfigData
 
 _logger = logging.getLogger(__name__)
 
@@ -72,10 +72,6 @@ class StyleDB:
                 method_name = 'postprocess_'+fname  # Keep the plural
                 method = getattr(cls, method_name, None)
                 method()
-
-    @classmethod
-    def dotest(cls):
-        cls.load_config_files()
 
     @classmethod
     def postprocess_text_styles(cls):
