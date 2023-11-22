@@ -430,7 +430,8 @@ class Layer:
             # Set the dash pattern
             pname = StyleDB.line_style[r.border_style].pattern  # name of border line style's pattern
             pvalue = StyleDB.dash_pattern[pname]  # find pattern value in dash pattern dict
-            self.Tablet.Context.set_dash(pvalue)  # If pvalue is [], line will be solid
+            if pvalue != (0, 0):
+                self.Tablet.Context.set_dash(pvalue)  # If pvalue is [], line will be solid
             # Set color and width
             line_color_name = StyleDB.line_style[r.border_style].color
             line_rgb_color_value = StyleDB.rgbF[line_color_name]

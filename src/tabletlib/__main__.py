@@ -8,7 +8,7 @@ import sys
 import argparse
 from tabletlib import version
 from pathlib import Path
-import make_a_tablet
+from tabletlib.etchasketch import EtchaSketch
 
 _logpath = Path("tabletlib.log")
 app_name = "Tablet"
@@ -62,8 +62,7 @@ def main():
         from tabletlib.styledb import StyleDB
         StyleDB.report_colors()
 
-    t = make_a_tablet.tabloid_size_tablet()
-    pass
+    EtchaSketch.draw_stuff()
 
     logger.info("No problemo")  # We didn't die on an exception
     print("\nNo problemo")

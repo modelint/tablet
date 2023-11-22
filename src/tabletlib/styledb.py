@@ -9,7 +9,8 @@ from tabletlib.exceptions import BadConfigData
 
 _logger = logging.getLogger(__name__)
 
-Float_RGB = namedtuple('Float_RGB', 'r g b canvas')
+Color_Canvas = namedtuple('Color_Canvas', 'r g b canvas')
+Float_RGB = namedtuple('Float_RGB', 'r g b')
 Line_Style = namedtuple('Line_Style', 'pattern width color')
 Text_Style = namedtuple('Text_Style', 'typeface size slant weight color spacing')
 Dash_Pattern = namedtuple('Dash_Pattern', 'solid blank')
@@ -17,7 +18,7 @@ Dash_Pattern = namedtuple('Dash_Pattern', 'solid blank')
 config_dir = Path(__file__).parent / "config"
 PP = namedtuple('PP', 'nt pre post')  # Postprocess config file data
 config_type = {
-    'colors': PP(Float_RGB, pre=True, post=False),
+    'colors': PP(Color_Canvas, pre=True, post=False),
     'line_styles': PP(nt=Line_Style, pre=False, post=False ),
     'dash_patterns': PP(nt=Dash_Pattern, pre=False, post=False),
     'typefaces': PP(nt=None, pre=False, post=False),
@@ -96,8 +97,7 @@ class StyleDB:
                     _logger.error(f"Bad color value [{n}] for: {name} in "
                                   f"config file:\n    {config_dir / 'colors.yaml'}")
                     raise BadConfigData
-            StyleDB.rgbF[name] = Float_RGB(r=round(rgb.r / 255, 2), g=round(rgb.g / 255, 2), b=round(rgb.b / 255, 2),
-                                           canvas=rgb.canvas)
+            StyleDB.rgbF[name] = Float_RGB(r=round(rgb.r / 255, 2), g=round(rgb.g / 255, 2), b=round(rgb.b / 255, 2))
 
     @classmethod
     def postprocess_color_usages(cls):
